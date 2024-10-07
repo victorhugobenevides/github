@@ -93,5 +93,5 @@ path: app/build/outputs/apk/debug
 APK:
 https://app.circleci.com/pipelines/github/victorhugobenevides/github_luizalabs/1/workflows/a1790b8d-1ee8-4d9a-9251-c0ba2dc24cb7/jobs/1/artifacts
 
-Ps. Aceito sugestôes de melhoria <3
+Ps. Aceito sugestões de melhoria <3
 
