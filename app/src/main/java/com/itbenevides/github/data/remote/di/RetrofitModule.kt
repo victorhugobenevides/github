@@ -1,0 +1,49 @@
+package com.itbenevides.github.data.remote.di
+
+import com.itbenevides.github.data.remote.APIService
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+object RetrofitModule {
+
+    @Provides
+    fun provideBaseUrl(): String = "https://api.github.com/"
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(baseUrl: String): Retrofit {
+
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+
+        val client: OkHttpClient = OkHttpClient.Builder().addInterceptor(Interceptor { chain ->
+            val newRequest: Request = chain.request().newBuilder()
+                .addHeader("Authorization", "Bearer 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")
+                .build()
+            chain.proceed(newRequest)
+        }).build()
+        return Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .client(client)
+            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideApiService(retrofit: Retrofit): APIService= retrofit.create(APIService::class.java)
+
+}
