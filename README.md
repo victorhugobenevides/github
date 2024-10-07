@@ -1,7 +1,7 @@
 <h1>Teste LuizaLabs Android</h1>
 
 <p>
-    Aqui está a minha poesia para computadores, uma mistura de aprendizado, desafios e alguns momentos de caos. 
+    Eis aqui minha poesia para computadores, uma mistura de aprendizado, desafios e alguns momentos de caos. 
     Desculpem a bagunça, mas cuidar de uma criança sozinho, procurar emprego e ainda encontrar tempo para estudar não é nada fácil! 
     Cada linha de código aqui representa um esforço sincero de quem está sempre tentando melhorar.
 </p>
@@ -86,3 +86,5 @@ path: app/build/outputs/apk/debug
     <li><strong>Build do APK</strong>: Gera o APK de debug.</li>
     <li><strong>Armazenamento do APK</strong>: Armazena o APK gerado como artefato, disponível para download no CircleCI.</li>
 </ul>
+
+
