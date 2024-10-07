@@ -30,6 +30,10 @@
 </p>
 
 <h3>Pipeline no CircleCI</h3>
+
+<a href="https://ibb.co/kJfP9sD"><img src="https://i.ibb.co/tzt1xT2/Captura-de-tela-2024-10-07-000836.png" alt="Captura-de-tela-2024-10-07-000836" border="0"></a><br /><a target='_blank' href='https://pt-br.imgbb.com/'>Image</a><br />
+
+
 <p>O arquivo <code>.circleci/config.yml</code> contém a configuração do pipeline, com os seguintes passos:</p>
 <pre><code>version: 2.1
 
