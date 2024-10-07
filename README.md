@@ -90,4 +90,6 @@ path: app/build/outputs/apk/debug
     <li><strong>Armazenamento do APK</strong>: Armazena o APK gerado como artefato, disponível para download no CircleCI.</li>
 </ul>
 
+APK:
+https://app.circleci.com/pipelines/github/victorhugobenevides/github_luizalabs/1/workflows/a1790b8d-1ee8-4d9a-9251-c0ba2dc24cb7/jobs/1/artifacts
 
