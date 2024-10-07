@@ -6,6 +6,8 @@
     Cada linha de código aqui representa um esforço sincero de quem está sempre tentando melhorar.
 </p>
 
+<a href="https://gifyu.com/image/SBEcS"><img src="https://s1.gifyu.com/images/SBEcS.gif" alt="Gravando 2024 10 07 004651" border="0" /></a>
+
 <h2>Tecnologias e Ferramentas Utilizadas</h2>
 <ul>
     <li><strong>Retrofit</strong>: Para fazer chamadas de API de um jeito mais tranquilo.</li>
