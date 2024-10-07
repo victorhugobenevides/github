@@ -23,3 +23,66 @@
     <li><strong>#MVVM</strong>: Separando as responsabilidades pra deixar o código mais limpinho.</li>
     <li><strong>#S.O.L.I.D</strong>: Porque um código sólido é sempre bem-vindo!</li>
 </ul>
+
+<h2>Integração Contínua</h2>
+<p>
+    Utilizamos o <strong>CircleCI</strong> para garantir que o nosso código esteja sempre em dia. Com pipelines configurados para rodar testes e gerar o build do APK automaticamente, podemos focar no que realmente importa: entregar uma experiência incrível para os usuários.
+</p>
+
+<h3>Pipeline no CircleCI</h3>
+<p>O arquivo <code>.circleci/config.yml</code> contém a configuração do pipeline, com os seguintes passos:</p>
+<pre><code>version: 2.1
+
+orbs:
+android: circleci/android@2.5.0
+
+jobs:
+build:
+executor:
+name: android/android-machine
+resource-class: large
+tag: 2021.10.1
+steps:
+- checkout
+- run:
+name: Install dependencies
+command: |
+sudo apt-get update && sudo apt-get install openjdk-17-jdk
+sudo update-alternatives --set java /usr/lib/jvm/java-17-openjdk-amd64/bin/java
+sudo update-alternatives --set javac /usr/lib/jvm/java-17-openjdk-amd64/bin/javac
+echo 'export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/' >> ~/.circlerc
+- run:
+name: Install permissions
+command: |
+chmod +x gradlew
+- run:
+name: Run unit test
+command: |
+./gradlew testReleaseUnitTest
+- store_test_results:
+path: app/build/test-results/testReleaseUnitTest
+- run:
+name: Build apk
+command: |
+./gradlew assembleDebug
+- store_artifacts:
+path: app/build/outputs/apk/debug
+</code></pre>
+
+<h3>Como configurar o CircleCI</h3>
+<ol>
+    <li>Crie uma conta no <a href="https://circleci.com/">CircleCI</a> e conecte seu repositório.</li>
+    <li>Crie um diretório <code>.circleci</code> na raiz do seu projeto e adicione o arquivo <code>config.yml</code> com o conteúdo acima.</li>
+    <li>Faça um commit do arquivo <code>.circleci/config.yml</code> e observe o pipeline rodar no CircleCI.</li>
+</ol>
+
+<h4>O que o pipeline faz:</h4>
+<ul>
+    <li><strong>Checkout</strong>: Faz a cópia do código do repositório.</li>
+    <li><strong>Instalação de Dependências</strong>: Instala o JDK 17 e ajusta o ambiente para utilizar essa versão do Java.</li>
+    <li><strong>Configuração de Permissões</strong>: Ajusta as permissões do <code>gradlew</code> para garantir que ele possa ser executado.</li>
+    <li><strong>Execução de Testes</strong>: Roda os testes de unidade para garantir que o código esteja funcionando como esperado.</li>
+    <li><strong>Armazenamento dos Resultados dos Testes</strong>: Armazena os resultados dos testes para visualização no CircleCI.</li>
+    <li><strong>Build do APK</strong>: Gera o APK de debug.</li>
+    <li><strong>Armazenamento do APK</strong>: Armazena o APK gerado como artefato, disponível para download no CircleCI.</li>
+</ul>
