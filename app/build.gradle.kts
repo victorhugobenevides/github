@@ -1,9 +1,9 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    kotlin("plugin.serialization") version "1.9.21"
-    kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    kotlin("plugin.serialization") version "1.9.0"
+    kotlin("kapt")
 }
 
 android {
@@ -88,14 +88,10 @@ dependencies {
     testImplementation (libs.kotlinx.coroutines.test)
     testImplementation (libs.turbine)
 
-    /* rx */
-    implementation (libs.rxandroid)
-    implementation (libs.rxjava)
-
 
     /* retrofit, gson */
     implementation (libs.retrofit)
-    implementation (libs.adapter.rxjava)
+    implementation (libs.retrofit2.kotlin.coroutines.adapter)
     implementation (libs.converter.gson)
     implementation (libs.logging.interceptor)
     implementation (libs.converter.scalars)

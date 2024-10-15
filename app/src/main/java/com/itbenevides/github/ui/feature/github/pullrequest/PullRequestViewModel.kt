@@ -2,6 +2,7 @@ package com.itbenevides.github.ui.feature.github.pullrequest
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.itbenevides.github.data.model.PullRequest
 import com.itbenevides.github.data.repository.GitHubRepository
 import com.itbenevides.github.ui.feature.github.StatusResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -39,38 +40,28 @@ class PullRequestViewModel @Inject constructor(
                 currentState.copy(status = StatusResult.Loading)
             }
 
-            try {
-                val response = gitHubRepository.getPullRequests(username, repositoryName)
-
-                _pullRequestInfoState.update { currentState ->
-                    currentState.copy(
-                        data = currentState.data + response,
-                        status = StatusResult.Success
-                    )
-                }
-            } catch (e: IOException) {
-                _pullRequestInfoState.update {
-                    it.copy(
-                        status = StatusResult.Error,
-                        errorMessages = "Network error. Please check your connection."
-                    )
-                }
-            } catch (e: HttpException) {
-                _pullRequestInfoState.update {
-                    it.copy(
-                        status = StatusResult.Error,
-                        errorMessages = "Server error. Please try again later. ${e.toString()}"
-                    )
-                }
-            } catch (e: Exception) {
-                _pullRequestInfoState.update {
-                    it.copy(
-                        status = StatusResult.Error,
-                        errorMessages = e.message ?: "Unknown error"
-                    )
-                }
-            } finally {
-                isLoading = false
+        try {
+            val response = gitHubRepository.getPullRequests(username, repositoryName).await()
+            updatePullRequestInfoState(StatusResult.Success, response)
+        } catch (e: IOException) {
+            updatePullRequestInfoState(StatusResult.Error, errorMessages = "Network error. Please check your connection.")
+        } catch (e: HttpException) {
+            updatePullRequestInfoState(StatusResult.Error, errorMessages = "Server error. Please try again later.")
+        } catch (e: Exception) {
+            updatePullRequestInfoState(StatusResult.Error, errorMessages = e.message ?: "Unknown error")
+        } finally {
+            isLoading = false
+        }
+        }
+    }
+    private fun updatePullRequestInfoState(statusResult: StatusResult, data: List<PullRequest> = mutableListOf(), errorMessages: String = ""){
+        viewModelScope.launch(Dispatchers.Main) {
+            _pullRequestInfoState.update { currentState ->
+                currentState.copy(
+                    data = currentState.data + data,
+                    status = statusResult,
+                    errorMessages = errorMessages
+                )
             }
         }
     }

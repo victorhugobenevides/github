@@ -12,7 +12,7 @@
     <li><strong>Hilt</strong>: Aquele empurrãozinho para facilitar a injeção de dependências.</li>
     <li><strong>Compose</strong>: Porque a vida é melhor quando a interface é declarativa.</li>
     <li><strong>StateFlow</strong>: Para gerenciar estados de forma reativa e fluída.</li>
-    <li><strong>RxJava</strong>: Fluxos de dados reativos para quando a gente quer que as coisas fluam naturalmente.</li>
+    <li><strong>Coroutines</strong>: Fluxos de dados reativos para quando a gente quer que as coisas fluam naturalmente.</li>
     <li><strong>Mockk</strong>: Quando a gente precisa simular um comportamento e seguir em frente.</li>
     <li><strong>JUnit</strong>: Para garantir que os bugs fiquem bem longe do código (ou pelo menos tentar!).</li>
 </ul>

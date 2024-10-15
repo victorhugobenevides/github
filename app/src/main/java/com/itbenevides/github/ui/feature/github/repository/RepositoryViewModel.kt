@@ -3,7 +3,6 @@ package com.itbenevides.github.ui.feature.github.repository
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.itbenevides.github.data.model.Repository
-import com.itbenevides.github.data.model.ResponseGitHub
 import com.itbenevides.github.data.repository.GitHubRepository
 import com.itbenevides.github.ui.feature.github.StatusResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -44,9 +43,9 @@ class RepositoryViewModel @Inject constructor(
         }
         updateRepositoryInfoState(StatusResult.Loading)
         isLoading = true
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
-                val response = gitHubRepository.getRepositories(page)
+                val response = gitHubRepository.getRepositories(page).await()
                 updateRepositoryInfoState(StatusResult.Success, response.items)
             } catch (e: IOException) {
                 updateRepositoryInfoState(StatusResult.Error, errorMessages = "Network error. Please check your connection.")
