@@ -6,11 +6,12 @@
     Cada linha de código aqui representa um esforço sincero de quem está sempre tentando melhorar.
 </p>
 
+<a href="https://gifyu.com/image/SBEcS"><img src="https://s1.gifyu.com/images/SBEcS.gif" alt="Gravando 2024 10 07 004651" border="0"  width="200"/></a>
+
 <h2>Tecnologias e Ferramentas Utilizadas</h2>
 <ul>
     <li><strong>Retrofit</strong>: Para fazer chamadas de API de um jeito mais tranquilo.</li>
     <li><strong>Hilt</strong>: Aquele empurrãozinho para facilitar a injeção de dependências.</li>
-    <li><strong>Compose</strong>: Porque a vida é melhor quando a interface é declarativa.</li>
     <li><strong>StateFlow</strong>: Para gerenciar estados de forma reativa e fluída.</li>
     <li><strong>Coroutines</strong>: Fluxos de dados reativos para quando a gente quer que as coisas fluam naturalmente.</li>
     <li><strong>Mockk</strong>: Quando a gente precisa simular um comportamento e seguir em frente.</li>
@@ -30,6 +31,10 @@
 </p>
 
 <h3>Pipeline no CircleCI</h3>
+
+<a href="https://ibb.co/kJfP9sD"><img src="https://i.ibb.co/tzt1xT2/Captura-de-tela-2024-10-07-000836.png" alt="Captura-de-tela-2024-10-07-000836" border="0"></a><br /><a target='_blank' href='https://pt-br.imgbb.com/'>Image</a><br />
+
+
 <p>O arquivo <code>.circleci/config.yml</code> contém a configuração do pipeline, com os seguintes passos:</p>
 <pre><code>version: 2.1
 
@@ -87,4 +92,8 @@ path: app/build/outputs/apk/debug
     <li><strong>Armazenamento do APK</strong>: Armazena o APK gerado como artefato, disponível para download no CircleCI.</li>
 </ul>
 
+APK:
+https://app.circleci.com/pipelines/github/victorhugobenevides/github_luizalabs/1/workflows/a1790b8d-1ee8-4d9a-9251-c0ba2dc24cb7/jobs/1/artifacts
+
+Ps. Aceito sugestões de melhoria <3
 
