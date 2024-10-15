@@ -41,7 +41,7 @@ class PullRequestViewModel @Inject constructor(
             }
 
         try {
-            val response = gitHubRepository.getPullRequests(username, repositoryName).await()
+            val response = gitHubRepository.getPullRequests(username, repositoryName)
             updatePullRequestInfoState(StatusResult.Success, response)
         } catch (e: IOException) {
             updatePullRequestInfoState(StatusResult.Error, errorMessages = "Network error. Please check your connection.")

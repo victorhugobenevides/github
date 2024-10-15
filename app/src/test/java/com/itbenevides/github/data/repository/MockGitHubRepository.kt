@@ -2,7 +2,6 @@ package com.itbenevides.github.data.repository
 
 import com.itbenevides.github.data.model.PullRequest
 import com.itbenevides.github.data.model.ResponseGitHub
-import kotlinx.coroutines.delay
 
 class MockGitHubRepository: GitHubRepository {
 

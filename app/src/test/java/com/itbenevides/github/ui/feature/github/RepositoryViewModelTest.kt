@@ -7,7 +7,6 @@ import com.itbenevides.github.data.repository.MockGitHubRepository
 import com.itbenevides.github.data.repository.MockGitHubRepositoryException
 import com.itbenevides.github.ui.feature.github.repository.RepositoryInfoState
 import com.itbenevides.github.ui.feature.github.repository.RepositoryViewModel
-import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
@@ -61,16 +60,22 @@ class RepositoryViewModelTest {
             }
         }
 
+        advanceUntilIdle()
+        runCurrent()
+        delay(500)
+
         viewModel.getRepositoryInfo()
 
         advanceUntilIdle()
         runCurrent()
         delay(500)
 
-        assertEquals(StatusResult.Loading, emittedStates[0].status)
+        assertEquals(StatusResult.Idle, emittedStates[0].status)
 
-        assertEquals(StatusResult.Success, emittedStates[1].status)
-        assertEquals(responsePage1.items, emittedStates[1].data)
+        assertEquals(StatusResult.Loading, emittedStates[1].status)
+
+        assertEquals(StatusResult.Success, emittedStates[2].status)
+        assertEquals(responsePage1.items, emittedStates[2].data)
 
 
         viewModel.getMoreRepositoryInfo()
@@ -79,10 +84,10 @@ class RepositoryViewModelTest {
         runCurrent()
         delay(500)
 
-        assertEquals(StatusResult.Loading, emittedStates[2].status)
+        assertEquals(StatusResult.Loading, emittedStates[3].status)
 
-        assertEquals(StatusResult.Success, emittedStates[3].status)
-        assertEquals(responsePage1.items + responsePage2.items, emittedStates[3].data)
+        assertEquals(StatusResult.Success, emittedStates[4].status)
+        assertEquals(responsePage1.items + responsePage2.items, emittedStates[4].data)
 
         job.cancel()
     }

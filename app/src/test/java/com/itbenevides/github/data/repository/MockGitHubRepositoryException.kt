@@ -1,11 +1,8 @@
 package com.itbenevides.github.data.repository
 
 import com.itbenevides.github.data.ExceptionEnum
-import com.itbenevides.github.data.model.MockResponseGitHub
 import com.itbenevides.github.data.model.PullRequest
 import com.itbenevides.github.data.model.ResponseGitHub
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException

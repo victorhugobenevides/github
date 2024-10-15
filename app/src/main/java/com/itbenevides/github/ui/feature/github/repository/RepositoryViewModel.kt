@@ -6,7 +6,6 @@ import com.itbenevides.github.data.model.Repository
 import com.itbenevides.github.data.repository.GitHubRepository
 import com.itbenevides.github.ui.feature.github.StatusResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -34,18 +33,11 @@ class RepositoryViewModel @Inject constructor(
 
     fun getRepositoryInfo(page: Int = 0) {
         if (isLoading) return
-
-        _repositoryInfoState.update { currentState ->
-            currentState.copy(
-                data = currentState.data,
-                status = StatusResult.Loading
-            )
-        }
         updateRepositoryInfoState(StatusResult.Loading)
         isLoading = true
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             try {
-                val response = gitHubRepository.getRepositories(page).await()
+                val response = gitHubRepository.getRepositories(page)
                 updateRepositoryInfoState(StatusResult.Success, response.items)
             } catch (e: IOException) {
                 updateRepositoryInfoState(StatusResult.Error, errorMessages = "Network error. Please check your connection.")
@@ -60,7 +52,6 @@ class RepositoryViewModel @Inject constructor(
     }
 
     private fun updateRepositoryInfoState(statusResult: StatusResult, data: List<Repository> = mutableListOf() , errorMessages: String = ""){
-        viewModelScope.launch(Dispatchers.Main) {
             _repositoryInfoState.update { currentState ->
                 currentState.copy(
                     data = currentState.data + data,
@@ -68,7 +59,6 @@ class RepositoryViewModel @Inject constructor(
                     errorMessages = errorMessages
                 )
             }
-        }
     }
 
     fun getMoreRepositoryInfo() {
