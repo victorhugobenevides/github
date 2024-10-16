@@ -11,9 +11,12 @@ class MockResponseGitHub {
     fun create(
         totalCount: Int = 1,
         incompleteResults: Boolean = false,
-        pageDescription:String = "",
+        pageDescription: String = "",
         repositories: MutableList<Repository> = MutableList(10) { index ->
-            MockRepository().create(name = "mock-repo-$index-$pageDescription", authorName = "mock-owner-$index-$pageDescription")
+            MockRepository().create(
+                name = "mock-repo-$index-$pageDescription",
+                authorName = "mock-owner-$index-$pageDescription"
+            )
         }
     ): ResponseGitHub {
         return mockk {

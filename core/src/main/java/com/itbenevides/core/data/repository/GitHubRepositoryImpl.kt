@@ -8,13 +8,13 @@ import javax.inject.Inject
 
 class GitHubRepositoryImpl @Inject constructor(
     private val apiService: APIService
-): GitHubRepository {
+) : GitHubRepository {
     override suspend fun getRepositories(page: Int): ResponseGitHub {
 
-       val response =
-           apiService
-               .getRepositories(page = page)
-               .await()
+        val response =
+            apiService
+                .getRepositories(page = page)
+                .await()
 
         return response
 

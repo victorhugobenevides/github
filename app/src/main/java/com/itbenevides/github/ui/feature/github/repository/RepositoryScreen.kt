@@ -58,14 +58,14 @@ import com.itbenevides.github.ui.feature.github.StatusResult
 
 
 @Composable
-    fun RepositoryRoute() {
+fun RepositoryRoute() {
     val viewModel = viewModel<RepositoryViewModel>()
     viewModel.getMoreRepositoryInfo()
     PullRequestState(viewModel)
-    }
+}
 
 @Composable
-fun PullRequestState(viewModel: RepositoryViewModel){
+fun PullRequestState(viewModel: RepositoryViewModel) {
     val state by viewModel.repositoryInfoState.collectAsStateWithLifecycle()
     RepositoryPage(state, viewModel)
 }
@@ -104,7 +104,7 @@ fun RepositoryPage(state: RepositoryInfoState, viewModel: RepositoryViewModel) {
             )
         },
     ) { innerPadding ->
-        RepositoryList(state = state, viewModel = viewModel, innerPadding )
+        RepositoryList(state = state, viewModel = viewModel, innerPadding)
     }
 }
 
@@ -113,46 +113,46 @@ fun RepositoryList(
     state: RepositoryInfoState,
     viewModel: RepositoryViewModel,
     innerPadding: PaddingValues
-){
-        val listState = rememberLazyListState()
-        val isScrollToEnd by remember {
-            derivedStateOf {
-                listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index == listState.layoutInfo.totalItemsCount - 1
-            }
-        }
-        if (isScrollToEnd) {
-            viewModel.getMoreRepositoryInfo()
-        }
-        LazyColumn(
-            state = listState,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = innerPadding.calculateTopPadding())
-        ) {
-            items(state.data) { repo ->
-                RepositoryCard(
-                    repositoryName = repo.name,
-                    repositoryDescription = repo.description.toString(),
-                    username = repo.owner.login,
-                    stars = repo.stargazers_count,
-                    forks = repo.forks,
-                    userImageUrl = repo.owner.avatar_url
-                )
-                Spacer(modifier = Modifier.height(2.dp)) // Espaço entre os itens
-            }
-                if(state.status == StatusResult.Error) {
-                    item {
-                        RepositoryErrorView(error = state.errorMessages, viewModel)
-                    }
-                }
-
-                if(state.status == StatusResult.Loading) {
-                    item {
-                        LoadingView()
-                    }
-                }
+) {
+    val listState = rememberLazyListState()
+    val isScrollToEnd by remember {
+        derivedStateOf {
+            listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index == listState.layoutInfo.totalItemsCount - 1
         }
     }
+    if (isScrollToEnd) {
+        viewModel.getMoreRepositoryInfo()
+    }
+    LazyColumn(
+        state = listState,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = innerPadding.calculateTopPadding())
+    ) {
+        items(state.data) { repo ->
+            RepositoryCard(
+                repositoryName = repo.name,
+                repositoryDescription = repo.description.toString(),
+                username = repo.owner.login,
+                stars = repo.stargazers_count,
+                forks = repo.forks,
+                userImageUrl = repo.owner.avatar_url
+            )
+            Spacer(modifier = Modifier.height(2.dp)) // Espaço entre os itens
+        }
+        if (state.status == StatusResult.Error) {
+            item {
+                RepositoryErrorView(error = state.errorMessages, viewModel)
+            }
+        }
+
+        if (state.status == StatusResult.Loading) {
+            item {
+                LoadingView()
+            }
+        }
+    }
+}
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
@@ -266,33 +266,33 @@ fun RepositoryCard(
 }
 
 @Composable
-    fun RepositoryErrorView(error: String, viewModel: RepositoryViewModel){
-        Card(
+fun RepositoryErrorView(error: String, viewModel: RepositoryViewModel) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                .padding(16.dp)
         ) {
-            Column(
-                modifier = Modifier
-                    .padding(16.dp)
+            Text(text = "Error: ${error}", style = MaterialTheme.typography.bodyLarge)
+            Button(
+                onClick = {
+                    viewModel.getMoreRepositoryInfo()
+                },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
-                Text(text = "Error: ${error}", style = MaterialTheme.typography.bodyLarge)
-                Button(
-                    onClick = {
-                        viewModel.getMoreRepositoryInfo()
-                    },
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                ) {
-                    Text(text = "Load More")
-                }
+                Text(text = "Load More")
             }
         }
     }
+}
 
 
-    @Preview(showSystemUi = true, showBackground = false)
-    @Composable
-    fun RepositoryPreview(){
+@Preview(showSystemUi = true, showBackground = false)
+@Composable
+fun RepositoryPreview() {
 
-    }
+}

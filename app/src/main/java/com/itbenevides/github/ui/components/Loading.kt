@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun LoadingView(){
+fun LoadingView() {
     Column(
         modifier = Modifier
             .fillMaxWidth()

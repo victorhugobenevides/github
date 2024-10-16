@@ -15,7 +15,7 @@ class RepositoryActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             GitHubTheme {
-                    RepositoryRoute()
+                RepositoryRoute()
             }
         }
     }

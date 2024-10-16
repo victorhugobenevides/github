@@ -19,7 +19,7 @@ class PullRequestActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             GitHubTheme {
-                    PullRequestRoute(username = username, repositoryName = repositoryName)
+                PullRequestRoute(username = username, repositoryName = repositoryName)
             }
         }
     }

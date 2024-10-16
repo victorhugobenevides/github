@@ -39,23 +39,33 @@ class RepositoryViewModel @Inject constructor(
                 val response = gitHubRepository.getRepositories(page)
                 updateRepositoryInfoState(StatusResult.Success, response.items)
             } catch (e: IOException) {
-                updateRepositoryInfoState(StatusResult.Error, errorMessages = "Network error. Please check your connection.")
+                updateRepositoryInfoState(
+                    StatusResult.Error,
+                    errorMessages = "Network error. Please check your connection."
+                )
             } catch (e: Exception) {
-                updateRepositoryInfoState(StatusResult.Error, errorMessages = e.message ?: "Unknown error")
+                updateRepositoryInfoState(
+                    StatusResult.Error,
+                    errorMessages = e.message ?: "Unknown error"
+                )
             } finally {
                 isLoading = false
             }
         }
     }
 
-    private fun updateRepositoryInfoState(statusResult: StatusResult, data: List<Repository> = mutableListOf(), errorMessages: String = ""){
-            _repositoryInfoState.update { currentState ->
-                currentState.copy(
-                    data = currentState.data + data,
-                    status = statusResult,
-                    errorMessages = errorMessages
-                )
-            }
+    private fun updateRepositoryInfoState(
+        statusResult: StatusResult,
+        data: List<Repository> = mutableListOf(),
+        errorMessages: String = ""
+    ) {
+        _repositoryInfoState.update { currentState ->
+            currentState.copy(
+                data = currentState.data + data,
+                status = statusResult,
+                errorMessages = errorMessages
+            )
+        }
     }
 
     fun getMoreRepositoryInfo() {

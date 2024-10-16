@@ -39,22 +39,32 @@ class PullRequestViewModel @Inject constructor(
                 currentState.copy(status = StatusResult.Loading)
             }
 
-        try {
-            val response = gitHubRepository.getPullRequests(username, repositoryName)
-            updatePullRequestInfoState(StatusResult.Success, response)
-        } catch (e: IOException) {
-            updatePullRequestInfoState(StatusResult.Error, errorMessages = "Network error. Please check your connection.")
+            try {
+                val response = gitHubRepository.getPullRequests(username, repositoryName)
+                updatePullRequestInfoState(StatusResult.Success, response)
+            } catch (e: IOException) {
+                updatePullRequestInfoState(
+                    StatusResult.Error,
+                    errorMessages = "Network error. Please check your connection."
+                )
 //        } catch (e: HttpException) {
 //            updatePullRequestInfoState(StatusResult.Error, errorMessages = "Server error. Please try again later.")
-        }
-        catch (e: Exception) {
-            updatePullRequestInfoState(StatusResult.Error, errorMessages = e.message ?: "Unknown error")
-        } finally {
-            isLoading = false
-        }
+            } catch (e: Exception) {
+                updatePullRequestInfoState(
+                    StatusResult.Error,
+                    errorMessages = e.message ?: "Unknown error"
+                )
+            } finally {
+                isLoading = false
+            }
         }
     }
-    private fun updatePullRequestInfoState(statusResult: StatusResult, data: List<PullRequest> = mutableListOf(), errorMessages: String = ""){
+
+    private fun updatePullRequestInfoState(
+        statusResult: StatusResult,
+        data: List<PullRequest> = mutableListOf(),
+        errorMessages: String = ""
+    ) {
         viewModelScope.launch(Dispatchers.Main) {
             _pullRequestInfoState.update { currentState ->
                 currentState.copy(

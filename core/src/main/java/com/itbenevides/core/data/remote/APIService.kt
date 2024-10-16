@@ -10,8 +10,14 @@ import retrofit2.http.Query
 
 interface APIService {
     @GET("search/repositories?q=language:Kotlin&amp;sort=stars&amp")
-    fun getRepositories(@Query("page") page: Int = 0, @Query("per_page") itemsPerPage: Int = 20): Deferred<ResponseGitHub>
+    fun getRepositories(
+        @Query("page") page: Int = 0,
+        @Query("per_page") itemsPerPage: Int = 20
+    ): Deferred<ResponseGitHub>
 
     @GET("repos/{user}/{repo}/pulls")
-    fun getPullRequests(@Path("user") user: String?, @Path("repo") repo: String?): Deferred<List<PullRequest>>
+    fun getPullRequests(
+        @Path("user") user: String?,
+        @Path("repo") repo: String?
+    ): Deferred<List<PullRequest>>
 }

@@ -116,7 +116,10 @@ class RepositoryViewModelTest {
         delay(500)
 
         assertEquals(StatusResult.Error, emittedStates.last().status)
-        assertEquals("Network error. Please check your connection.", emittedStates.last().errorMessages)
+        assertEquals(
+            "Network error. Please check your connection.",
+            emittedStates.last().errorMessages
+        )
 
         job.cancel()
     }

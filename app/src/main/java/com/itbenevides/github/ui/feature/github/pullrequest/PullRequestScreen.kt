@@ -52,24 +52,29 @@ import com.itbenevides.github.ui.components.LoadingView
 import com.itbenevides.github.ui.feature.github.StatusResult
 
 @Composable
-    fun PullRequestRoute(
+fun PullRequestRoute(
     username: String?,
     repositoryName: String?
-    ) {
-        val viewModel = viewModel<PullRequestViewModel>()
-        viewModel.getPullRequestInfo(username, repositoryName)
-        PullRequestState(viewModel, username, repositoryName)
-    }
+) {
+    val viewModel = viewModel<PullRequestViewModel>()
+    viewModel.getPullRequestInfo(username, repositoryName)
+    PullRequestState(viewModel, username, repositoryName)
+}
 
 @Composable
-fun PullRequestState(viewModel: PullRequestViewModel, username: String?, repositoryName: String?){
+fun PullRequestState(viewModel: PullRequestViewModel, username: String?, repositoryName: String?) {
     val state by viewModel.pullRequestInfoState.collectAsStateWithLifecycle()
     PullRequestPage(state, viewModel, username, repositoryName)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PullRequestPage(state: PullRequestInfoState, viewModel: PullRequestViewModel, username: String?,  repositoryName: String?) {
+fun PullRequestPage(
+    state: PullRequestInfoState,
+    viewModel: PullRequestViewModel,
+    username: String?,
+    repositoryName: String?
+) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
     val activity = LocalContext.current as? Activity
     Scaffold(
@@ -101,7 +106,13 @@ fun PullRequestPage(state: PullRequestInfoState, viewModel: PullRequestViewModel
             )
         },
     ) { innerPadding ->
-        PullRequestList(state = state, viewModel = viewModel,innerPadding = innerPadding, username = username, repositoryName = repositoryName)
+        PullRequestList(
+            state = state,
+            viewModel = viewModel,
+            innerPadding = innerPadding,
+            username = username,
+            repositoryName = repositoryName
+        )
     }
 }
 
@@ -112,26 +123,26 @@ fun PullRequestList(
     username: String?,
     repositoryName: String?,
     innerPadding: PaddingValues,
-){
+) {
     Column(
         modifier = Modifier.padding(top = innerPadding.calculateTopPadding())
     ) {
-       Row {
-           Text(
-               text = "500 opened",
-               style = MaterialTheme.typography.labelLarge,
-               color = Color(0xFFCCAA22),
-               maxLines = 1,
-               modifier = Modifier.padding(top = 4.dp)
-           )
-           Text(
-               text = "/200 closed",
-               style = MaterialTheme.typography.labelLarge,
-               color = Color.Black,
-               maxLines = 1,
-               modifier = Modifier.padding(top = 4.dp)
-           )
-       }
+        Row {
+            Text(
+                text = "500 opened",
+                style = MaterialTheme.typography.labelLarge,
+                color = Color(0xFFCCAA22),
+                maxLines = 1,
+                modifier = Modifier.padding(top = 4.dp)
+            )
+            Text(
+                text = "/200 closed",
+                style = MaterialTheme.typography.labelLarge,
+                color = Color.Black,
+                maxLines = 1,
+                modifier = Modifier.padding(top = 4.dp)
+            )
+        }
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -147,13 +158,18 @@ fun PullRequestList(
                 Spacer(modifier = Modifier.height(2.dp))
             }
 
-            if(state.status == StatusResult.Error) {
+            if (state.status == StatusResult.Error) {
                 item {
-                    PullRequestErrorView(error = state.errorMessages, viewModel, username, repositoryName)
+                    PullRequestErrorView(
+                        error = state.errorMessages,
+                        viewModel,
+                        username,
+                        repositoryName
+                    )
                 }
             }
 
-            if(state.status == StatusResult.Loading) {
+            if (state.status == StatusResult.Loading) {
                 item {
                     LoadingView()
                 }
@@ -163,43 +179,43 @@ fun PullRequestList(
     }
 
 
-    }
+}
 
 @Composable
-    fun PullRequestErrorView(
+fun PullRequestErrorView(
     error: String,
     viewModel: PullRequestViewModel,
     username: String?,
     repositoryName: String?
 ) {
     Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                .padding(16.dp)
         ) {
-            Column(
-                modifier = Modifier
-                    .padding(16.dp)
+            Text(text = "Error: $error", style = MaterialTheme.typography.bodyLarge)
+            Button(
+                onClick = {
+                    viewModel.getPullRequestInfo(username, repositoryName)
+                },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
-                Text(text = "Error: $error", style = MaterialTheme.typography.bodyLarge)
-                Button(
-                    onClick = {
-                        viewModel.getPullRequestInfo(username, repositoryName)
-                    },
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                ) {
-                    Text(text = "Load More")
-                }
+                Text(text = "Load More")
             }
         }
     }
+}
 
-    @Preview(showSystemUi = true, showBackground = false)
-    @Composable
-    fun GitHubScreenPreview(){
+@Preview(showSystemUi = true, showBackground = false)
+@Composable
+fun GitHubScreenPreview() {
 
-    }
+}
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
