@@ -1,7 +1,8 @@
 package com.itbenevides.github.data.repository
 
-import com.itbenevides.github.data.model.PullRequest
-import com.itbenevides.github.data.model.ResponseGitHub
+import com.itbenevides.core.data.model.PullRequest
+import com.itbenevides.core.data.model.ResponseGitHub
+import com.itbenevides.core.data.repository.GitHubRepository
 
 class MockGitHubRepository: GitHubRepository {
 

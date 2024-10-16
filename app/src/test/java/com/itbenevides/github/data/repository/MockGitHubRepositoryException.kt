@@ -1,19 +1,17 @@
 package com.itbenevides.github.data.repository
 
+import com.itbenevides.core.data.model.PullRequest
+import com.itbenevides.core.data.model.ResponseGitHub
+import com.itbenevides.core.data.repository.GitHubRepository
 import com.itbenevides.github.data.ExceptionEnum
-import com.itbenevides.github.data.model.PullRequest
-import com.itbenevides.github.data.model.ResponseGitHub
-import retrofit2.HttpException
-import retrofit2.Response
 import java.io.IOException
 
 class MockGitHubRepositoryException(val enum: ExceptionEnum): GitHubRepository {
 
-    @Throws(HttpException::class)
     override suspend fun getRepositories(page: Int): ResponseGitHub {
             when(enum){
                 ExceptionEnum.IOException -> throw IOException()
-                ExceptionEnum.HttpException -> throw HttpException(Response.error<Any>(404, null))
+                ExceptionEnum.HttpException -> throw IOException()
                 else -> throw Exception()
             }
         }
@@ -21,7 +19,7 @@ class MockGitHubRepositoryException(val enum: ExceptionEnum): GitHubRepository {
     override suspend fun getPullRequests(user: String?, repo: String?): List<PullRequest> {
         when(enum){
             ExceptionEnum.IOException -> throw IOException()
-            ExceptionEnum.HttpException -> throw HttpException(Response.error<Any>(404, null))
+            ExceptionEnum.HttpException -> throw IOException()
             else -> throw Exception()
         }
     }

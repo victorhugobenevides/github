@@ -75,6 +75,7 @@ class RepositoryViewModelTest {
         assertEquals(StatusResult.Loading, emittedStates[1].status)
 
         assertEquals(StatusResult.Success, emittedStates[2].status)
+
         assertEquals(responsePage1.items, emittedStates[2].data)
 
 

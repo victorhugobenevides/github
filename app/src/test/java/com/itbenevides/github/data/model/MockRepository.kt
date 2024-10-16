@@ -1,4 +1,5 @@
-import com.itbenevides.github.data.model.Repository
+
+import com.itbenevides.core.data.model.Repository
 import io.mockk.every
 import io.mockk.mockk
 

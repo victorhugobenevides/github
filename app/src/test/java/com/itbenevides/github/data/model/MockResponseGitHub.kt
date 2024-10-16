@@ -1,6 +1,8 @@
 package com.itbenevides.github.data.model
 
 import MockRepository
+import com.itbenevides.core.data.model.Repository
+import com.itbenevides.core.data.model.ResponseGitHub
 import io.mockk.every
 import io.mockk.mockk
 

@@ -67,6 +67,7 @@ dependencies {
 
     implementation(libs.hilt.android)
     implementation(libs.androidx.benchmark.macro)
+
     kapt(libs.hilt.android.compiler)
     kapt (libs.kotlinx.metadata.jvm)
 
@@ -89,14 +90,9 @@ dependencies {
     testImplementation (libs.turbine)
 
 
-    /* retrofit, gson */
-    implementation (libs.retrofit)
-    implementation (libs.retrofit2.kotlin.coroutines.adapter)
-    implementation (libs.converter.gson)
-    implementation (libs.logging.interceptor)
-    implementation (libs.converter.scalars)
-
     implementation (libs.compose)
+
+    api(project(":core"))
 
 }
 

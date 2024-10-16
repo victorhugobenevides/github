@@ -2,8 +2,8 @@ package com.itbenevides.github.ui.feature.github.repository
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.itbenevides.github.data.model.Repository
-import com.itbenevides.github.data.repository.GitHubRepository
+import com.itbenevides.core.data.model.Repository
+import com.itbenevides.core.data.repository.GitHubRepository
 import com.itbenevides.github.ui.feature.github.StatusResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
@@ -41,8 +40,6 @@ class RepositoryViewModel @Inject constructor(
                 updateRepositoryInfoState(StatusResult.Success, response.items)
             } catch (e: IOException) {
                 updateRepositoryInfoState(StatusResult.Error, errorMessages = "Network error. Please check your connection.")
-            } catch (e: HttpException) {
-                updateRepositoryInfoState(StatusResult.Error, errorMessages = "Server error. Please try again later.")
             } catch (e: Exception) {
                 updateRepositoryInfoState(StatusResult.Error, errorMessages = e.message ?: "Unknown error")
             } finally {
@@ -51,7 +48,7 @@ class RepositoryViewModel @Inject constructor(
         }
     }
 
-    private fun updateRepositoryInfoState(statusResult: StatusResult, data: List<Repository> = mutableListOf() , errorMessages: String = ""){
+    private fun updateRepositoryInfoState(statusResult: StatusResult, data: List<Repository> = mutableListOf(), errorMessages: String = ""){
             _repositoryInfoState.update { currentState ->
                 currentState.copy(
                     data = currentState.data + data,

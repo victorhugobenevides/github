@@ -16,9 +16,10 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        jcenter()
     }
 }
 
 rootProject.name = "github"
 include(":app")
- 
+include(":core")
