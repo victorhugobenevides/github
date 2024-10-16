@@ -6,7 +6,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
@@ -28,12 +27,15 @@ object RetrofitModule {
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
 
-        val client: OkHttpClient = OkHttpClient.Builder().addInterceptor(Interceptor { chain ->
+        val client: OkHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
             val newRequest: Request = chain.request().newBuilder()
-                .addHeader("Authorization", "Bearer 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")
+                .addHeader(
+                    "Authorization",
+                    "Bearer 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"
+                )
                 .build()
             chain.proceed(newRequest)
-        }).build()
+        }.build()
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(client)

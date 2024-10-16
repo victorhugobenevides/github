@@ -1,8 +1,5 @@
 package com.itbenevides.core.data.model
 
-import com.itbenevides.core.data.model.License
-import com.itbenevides.core.data.model.Owner
-
 data class Repository(
     val id: Long,
     val node_id: String,
