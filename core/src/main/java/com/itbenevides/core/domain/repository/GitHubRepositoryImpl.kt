@@ -4,6 +4,7 @@ package com.itbenevides.core.domain.repository
 import com.itbenevides.core.data.model.PullRequest
 import com.itbenevides.core.data.model.ResponseGitHub
 import com.itbenevides.core.data.remote.APIService
+import com.itbenevides.core.data.repository.GitHubRepository
 import javax.inject.Inject
 
 class GitHubRepositoryImpl @Inject constructor(

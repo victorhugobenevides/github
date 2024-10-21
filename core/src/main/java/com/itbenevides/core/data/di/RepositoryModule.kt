@@ -1,6 +1,6 @@
 package com.itbenevides.core.data.di
 
-import com.itbenevides.core.domain.repository.GitHubRepository
+import com.itbenevides.core.data.repository.GitHubRepository
 import com.itbenevides.core.domain.repository.GitHubRepositoryImpl
 import dagger.Binds
 import dagger.Module
