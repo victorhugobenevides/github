@@ -3,7 +3,7 @@ package com.itbenevides.github.ui.feature.github.pullrequest
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.itbenevides.core.data.model.PullRequest
-import com.itbenevides.core.data.repository.GitHubRepository
+import com.itbenevides.core.domain.usecase.GetPullRequestUseCase
 import com.itbenevides.github.ui.feature.github.StatusResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PullRequestViewModel @Inject constructor(
-    private val gitHubRepository: GitHubRepository,
+    private var getPullRequestUseCase: GetPullRequestUseCase
 ) : ViewModel() {
 
     private val _pullRequestInfoState = MutableStateFlow(
@@ -40,7 +40,7 @@ class PullRequestViewModel @Inject constructor(
             }
 
             try {
-                val response = gitHubRepository.getPullRequests(username, repositoryName)
+                val response = getPullRequestUseCase.getPullRequests(username, repositoryName)
                 updatePullRequestInfoState(StatusResult.Success, response)
             } catch (e: IOException) {
                 updatePullRequestInfoState(

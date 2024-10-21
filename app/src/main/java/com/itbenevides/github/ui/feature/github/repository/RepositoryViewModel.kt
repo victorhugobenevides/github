@@ -3,7 +3,7 @@ package com.itbenevides.github.ui.feature.github.repository
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.itbenevides.core.data.model.Repository
-import com.itbenevides.core.data.repository.GitHubRepository
+import com.itbenevides.core.domain.usecase.GetRepositoriesUseCase
 import com.itbenevides.github.ui.feature.github.StatusResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RepositoryViewModel @Inject constructor(
-    private val gitHubRepository: GitHubRepository
+    private var getRepositoriesUseCase: GetRepositoriesUseCase
 ) : ViewModel() {
 
     private val _repositoryInfoState = MutableStateFlow(
@@ -36,8 +36,9 @@ class RepositoryViewModel @Inject constructor(
         isLoading = true
         viewModelScope.launch {
             try {
-                val response = gitHubRepository.getRepositories(page)
-                updateRepositoryInfoState(StatusResult.Success, response.items)
+                val items = getRepositoriesUseCase.getRepositories(page)
+
+                updateRepositoryInfoState(StatusResult.Success, items)
             } catch (e: IOException) {
                 updateRepositoryInfoState(
                     StatusResult.Error,

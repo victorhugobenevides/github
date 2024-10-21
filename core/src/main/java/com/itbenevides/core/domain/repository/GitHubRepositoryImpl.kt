@@ -1,4 +1,4 @@
-package com.itbenevides.core.data.repository
+package com.itbenevides.core.domain.repository
 
 
 import com.itbenevides.core.data.model.PullRequest

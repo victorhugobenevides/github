@@ -3,8 +3,8 @@ package com.itbenevides.github.ui.feature.github
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import com.itbenevides.github.data.ExceptionEnum
 import com.itbenevides.github.data.model.MockResponseGitHub
-import com.itbenevides.github.data.repository.MockGitHubRepository
-import com.itbenevides.github.data.repository.MockGitHubRepositoryException
+import com.itbenevides.github.domain.MockGetRepositoriesUseCase
+import com.itbenevides.github.domain.MockGetRepositoriesUseCaseException
 import com.itbenevides.github.ui.feature.github.repository.RepositoryInfoState
 import com.itbenevides.github.ui.feature.github.repository.RepositoryViewModel
 import kotlinx.coroutines.Dispatchers
@@ -43,14 +43,14 @@ class RepositoryViewModelTest {
 
     @Test
     fun `getRepositoryInfo success`() = runTest {
-        val gitHubRepository = MockGitHubRepository()
+        val getRepositoriesUseCase = MockGetRepositoriesUseCase()
         val responsePage1 = MockResponseGitHub().create(pageDescription = "1")
         val responsePage2 = MockResponseGitHub().create(pageDescription = "2")
 
-        gitHubRepository.pageRepository.add(responsePage1)
-        gitHubRepository.pageRepository.add(responsePage2)
+        getRepositoriesUseCase.pageRepository.add(responsePage1)
+        getRepositoriesUseCase.pageRepository.add(responsePage2)
 
-        val viewModel = RepositoryViewModel(gitHubRepository)
+        val viewModel = RepositoryViewModel(getRepositoriesUseCase)
 
         val emittedStates = mutableListOf<RepositoryInfoState>()
 
@@ -76,7 +76,7 @@ class RepositoryViewModelTest {
 
         assertEquals(StatusResult.Success, emittedStates[2].status)
 
-        assertEquals(responsePage1.items, emittedStates[2].data)
+        assertEquals(responsePage1, emittedStates[2].data)
 
 
         viewModel.getMoreRepositoryInfo()
@@ -88,7 +88,7 @@ class RepositoryViewModelTest {
         assertEquals(StatusResult.Loading, emittedStates[3].status)
 
         assertEquals(StatusResult.Success, emittedStates[4].status)
-        assertEquals(responsePage1.items + responsePage2.items, emittedStates[4].data)
+        assertEquals(responsePage1 + responsePage2, emittedStates[4].data)
 
         job.cancel()
     }
@@ -96,10 +96,11 @@ class RepositoryViewModelTest {
 
     @Test
     fun `getRepositoryInfo error IOException`() = runTest {
-        val gitHubRepository = MockGitHubRepositoryException(ExceptionEnum.IOException)
 
 
-        val viewModel = RepositoryViewModel(gitHubRepository)
+        val getRepositoriesUseCase = MockGetRepositoriesUseCaseException(ExceptionEnum.IOException)
+
+        val viewModel = RepositoryViewModel(getRepositoriesUseCase)
 
         val emittedStates = mutableListOf<RepositoryInfoState>()
 
