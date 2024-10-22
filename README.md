@@ -1,4 +1,4 @@
-<h1>Teste LuizaLabs Android</h1>
+<h1>Teste Android</h1>
 
 <p>
     Eis aqui minha poesia para computadores, uma mistura de aprendizado, desafios e alguns momentos de caos. 
